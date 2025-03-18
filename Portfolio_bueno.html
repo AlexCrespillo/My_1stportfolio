@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Crespillo López</title>
+  <style>
+    /* Diseño moderno y minimalista: fondo degradado oscuro, texto blanco en el body.
+       Los contenedores de contenido (cuadrículas) son blancos sin bordes redondeados. */
+    body {
+      margin: 0;
+      position: relative;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      /* Fondo degradado: de #333 a #111 */
+      background: linear-gradient(45deg, #333, #111);
+      color: #fff;
+      line-height: 1.6;
+    }
+    header {
+      background: url('SUPERCELL.gif') no-repeat center center;
+      background-size: cover;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    /* Fuente distinta solo para el encabezado */
+    header h1, header p {
+      font-family: Georgia, serif;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: linear-gradient(45deg, #333, #111);
+      padding: 10px;
+      border-bottom: 1px solid #444;
+      position: relative;
+      z-index: 1;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #ccc;
+    }
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    /* Contenedores de contenido: cuadrículas blancas sin bordes redondeados */
+    .grid-box {
+      background-color: #fff;
+      color: #000;
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+    .grid-box h2 {
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Estilo para los iconos en forma de imagen */
+    .section-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      object-fit: contain;
+    }
+    /* Sección Meet Me: la cuadrícula incluye tanto el texto como la foto, posicionados a la derecha */
+    #meetme .meetme-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    #meetme .meetme-text {
+      flex: 1;
+      padding: 20px;
+    }
+    #meetme .meetme-photo {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #meetme .meetme-photo img {
+      width: 150px;
+      height: auto;
+    }
+    /* Estilos para el área de logos de empresa */
+    .company-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .company-logos img {
+      max-width: 300px; /* Ajusta el tamaño máximo según lo necesites */
+      height: auto;
+    }
+    /* Estilos para los logos de las competencias digitales */
+    .skills-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .skills-logos img {
+      width: 50px;
+      height: auto;
+      cursor: pointer;
+    }
+    /* Estilos para certificados en la sección Recognitions */
+    .certificates {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin: 10px 0;
+    }
+    .certificates img {
+      width: 50px;
+      height: auto;
+      cursor: pointer;
+    }
+    /* Estilos para el logo del CV */
+    .cv-logo {
+      display: block;
+      margin: 20px auto;
+      width: 100px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(45deg, #333, #111);
+      border-top: 1px solid #444;
+      position: relative;
+      z-index: 1;
+    }
+    /* Contenedores fijos para las citas en los laterales */
+    .quotes-left, .quotes-right {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 0.40;
+      font-size: 1.2em;
+      color: #fff;
+      text-align: center;
+      width: 150px;
+      z-index: 0;
+    }
+    .quotes-left {
+      left: 100px;
+    }
+    .quotes-right {
+      right: 100px;
+    }
+    .quotes-left p, .quotes-right p {
+      margin: 20px 0;
+    }
+    /* Estilos para el modal del PDF */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      margin: 5% auto;
+      padding: 20px;
+      background: #fff;
+      width: 80%;
+      max-width: 800px;
+      position: relative;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
+    /* Estilo para los ítems de proyectos */
+    .project-item {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .project-item img {
+      width: 200px;
+      cursor: pointer;
+    }
+    /* Estilos para la sección de redes sociales */
+    .social-media {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(45deg, #333, #111);
+    }
+    .social-media p {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+      color: #fff;
+    }
+    .social-media a {
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    .social-media img {
+      width: 40px;
+      height: auto;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Contenedores de citas a los laterales -->
+  <div class="quotes-left">
+    <p>"Science has no homeland, because knowledge is the heritage of humanity." – Louis Pasteur</p>
+    <p>"Nothing in life should be feared, only understood."  – Marie Curie</p>
+  </div>
+  <div class="quotes-right">
+    <p>"The important thing is not to stop questioning." – Albert Einstein</p>
+    <p>"The first principle is that you must not fool yourself." – Richard Feynman</p>
+  </div>
+  
+  <header>
+    <h1>Alex Crespillo López</h1>
+    <p>Predoctoral Researcher – Specialist in Meteorology and Climate Sciences</p>
+  </header>
+  <nav>
+    <a href="#meetme">Meet Me</a>
+    <a href="#principles">Research Principles</a>
+    <a href="#commitment">Professional Commitment</a>
+    <a href="#competencies">Digital Competencies</a>
+    <a href="#recognitions">Recognitions</a>
+    <a href="#projects">My Projects</a>
+    <a href="#expectations">Professional Expectations</a>
+  </nav>
+  <main>
+    <section id="meetme">
+      <div class="grid-box meetme-container">
+        <div class="meetme-text">
+          <h2>
+            <img class="section-icon" src="user.png" alt="User Icon"> Meet Me
+          </h2>
+          <p>
+            Welcome to my portfolio! I am Alex Crespillo López, a predoctoral researcher specializing in Meteorology and Climate Sciences.
+            I am passionate about analyzing climate data and understanding atmospheric phenomena. I love practicing all kinds of sports, I am a lover of nature and travel and I always like to learn new things. Enjoy exploring my work and experiences!
+          </p>
+        </div>
+        <div class="meetme-photo">
+          <img src="fotomiasinfondo.png" alt="Alex Crespillo López">
+        </div>
+      </div>
+    </section>
+    <section id="principles">
+      <div class="grid-box">
+        <h2>
+          <img class="section-icon" src="key.png" alt="Atom Icon"> Research Principles
+        </h2>
+        <p>
+         I am committed to rigorous scientific inquiry and transparency, using data-driven analysis and innovative modeling to unravel atmospheric phenomena. Focused on environmental sustainability, my reflective approach drives me to pursue knowledge with curiosity, rigor, and continuous self-reflection—consistently questioning what it means to be a good researcher and how research and learning are intertwined. In every project, I set clear objectives and choose methodologies tailored to the challenges at hand, and I am eager to explore the promising potential of artificial intelligence in my field. This blend of reflective practice and a passion for technological advancement fuels my relentless drive for discovery and improvement.
+        </p>
+      </div>
+    </section>
+    <section id="commitment">
+      <div class="grid-box">
+        <h2>
+          <img class="section-icon" src="list.png" alt="Handshake Icon"> Professional Commitment
+        </h2>
+        <p>
+         I am currently engaged as a predoctoral researcher at the Pyrenean Institute of Ecology (IPE)-(CSIC), where I apply AI and Big Data techniques to analyze drought patterns and predict climatic changes. My professional journey also includes internships at "Andorra + Research and Innovation" and "TR215 Geological Engineering", experiences that have reinforced my analytical skills and deepened my commitment to advancing research in meteorology.
+         My professional commitment is reflected in a comprehensive approach that details my responsibilities, innovative projects, and reflective practices. I continuously evaluate my work—questioning my role as a researcher, setting clear objectives, and selecting methodologies tailored to each challenge. By documenting project outcomes, maintaining reflective diaries, gathering feedback, and performing self-evaluations (including SWOT analyses), I strive for constant improvement and innovation in my research. Check out our work at IPE by clicking on the company logo.
+        </p>
+        <div class="company-logos">
+          <a href="https://www.ipe.csic.es/" target="_blank">
+            <img src="Logo ipe-csic.jpg" alt="Company Logo 1">
+          </a>        
+        </div>
+      </div>
+    </section>
+    <section id="competencies">
+      <div class="grid-box">
+        <h2>
+          <img class="section-icon" src="pc.png" alt="Code Icon"> Digital Competencies
+        </h2>
+        <p>
+Digital competences are integral to my research practice, underpinning my ability to innovate, analyze, and communicate complex data effectively. I leverage programming languages such as Python and R for advanced data analysis, statistical modeling, and visualization, which allow me to extract meaningful insights from large datasets. Additionally, I utilize Geographic Information Systems like ArcGIS Pro to conduct spatial analyses, map climate patterns, and monitor drought conditions with precision. 
+Complementing these tools, I employ SQL for robust data management and efficient querying of extensive databases. This holistic integration of digital technologies not only streamlines my research workflows but also enhances collaboration and drives continuous improvement across all facets of my work. Click on the Python and R logos to see the official certifications.
+        </p>
+        <!-- Digital competencies logos -->
+        <div class="skills-logos">
+          <a href="The Complete Python Developer.pdf" target="_blank">
+            <img src="python.png" alt="Python">
+          </a>
+          <a href="Curso completo de R para Data Science y Machine Learning.pdf" target="_blank">
+            <img src="r.png" alt="R">
+          </a>
+          <img src="arcgis.png" alt="ArcGIS Pro">
+          <img src="sql.png" alt="SQL">
+        </div>
+      </div>
+    </section>
+    <section id="recognitions">
+      <div class="grid-box">
+        <h2>
+          <img class="section-icon" src="medal.png" alt="Medal Icon"> Recognitions
+        </h2>
+        <p>
+          Given that my career as a researcher is still in its early stages, I currently do not have many recognitions. However, I am confident that I will achieve many more in the near future. So far, I have completed a degree in Geology and a Master's in Meteorology, along with language certifications in English and French. 
+          Before concluding, I would like to highlight my final Master's project, "Analysis of thermal inversions in the Andorran Central Valley and their relationship with episodes of atmospheric pollution and meteorological variables," which stands as my first and only scientific project to date.
+          Click on the logos to see the official certifications.
+        </p>
+        
+        <h3>Academic Certificates</h3>
+        <div class="certificates academic">
+          <a href="Título universitario.pdf" target="_blank">
+            <img src="geology.png" alt="Geology Degree">
+          </a>
+          <a href="Título máster.pdf" target="_blank">
+            <img src="meteo.png" alt="Master's in Meteorology">
+          </a>
+        </div>
+        <h3>Language Certificates</h3>
+        <div class="certificates language">
+          <a href="English proficiency.pdf" target="_blank">
+            <img src="uk.png" alt="Cambridge Certificate – English Level B2">
+          </a>
+          <a href="delf_certificate.pdf" target="_blank">
+            <img src="france.png" alt="DELF Certificate – French Level B2">
+          </a>
+        </div>
+        
+        <p>
+          These accomplishments underscore my dedication to excellence in research and my continuous professional development.
+        </p>
+      </div>
+    </section>
+    <!-- Nueva sección My Projects -->
+    <section id="projects">
+      <div class="grid-box">
+        <h2>
+          <img class="section-icon" src="project.jpg" alt="Project Icon"> My Projects
+        </h2>
+        <p>
+          This is the section where you can find my most recent projects. For now, only my final Master's project is available.
+        </p>
+        <div class="project-item">
+          <a href="javascript:void(0);" id="pdfThumbnail">
+            <img src="tfm.jpg" alt="Final Master's Project Thumbnail">
+          </a>
+          <p>Final Master's Project: "Analysis of thermal inversions in the Andorran Central Valley and their relationship with episodes of atmospheric pollution and meteorological variables."</p>
+        </div>
+      </div>
+    </section>
+    <section id="expectations">
+      <div class="grid-box">
+        <h2>
+          <img class="section-icon" src="rocket.png" alt="Rocket Icon"> Professional Expectations
+        </h2>
+        <p>
+          Throughout my journey as a researcher, I have embraced both the challenges and opportunities that have shaped my professional identity. I have just begun my thesis, and my short- to medium-term objectives focus on furthering my education and mastering the fundamentals that will serve as the foundation for a more robust career in the long term. I look forward to expanding my expertise through targeted training and the initiation of innovative projects, while sharing my insights via scholarly articles and collaborative ventures. This ongoing evolution fuels my commitment to personal growth and meaningful contributions to my field, as documented in my CV.
+        </p>
+        <!-- Logo for the CV -->
+        <a href="CV_Alex_Eng.pdf" target="_blank">
+          <img src="cv.png" alt="View CV" class="cv-logo">
+        </a>
+      </div>
+    </section>
+    <!-- Nueva sección para redes sociales, fuera de las rejillas -->
+    <div class="social-media">
+      <p>Find me at:</p>
+      <a href="https://www.linkedin.com/in/alexcrespillo/" target="_blank">
+        <img src="linkedln.png" alt="LinkedIn">
+      </a>
+      <a href="mailto:alex@ipe.csic.es" target="_blank">
+        <img src="gmail.jpg" alt="Gmail">
+      </a>
+      <a href="https://x.com/CrespiMeteoNews" target="_blank">
+        <img src="X.jpg" alt="X">
+      </a>
+    </div>
+  </main>
+  
+  <footer>
+    <p>© 2025 Alex Crespillo López – Alex Digital Portfolio</p>
+  </footer>
+  
+  <!-- Modal para mostrar el PDF ampliado -->
+  <div id="pdfModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="modalClose">&times;</span>
+      <iframe src="Final master thesis.pdf" width="100%" height="600px" style="border: none;"></iframe>
+    </div>
+  </div>
+  
+  <script>
+    // Al hacer clic en la miniatura se muestra el modal con el PDF ampliado
+    document.getElementById('pdfThumbnail').addEventListener('click', function(){
+      document.getElementById('pdfModal').style.display = 'block';
+    });
+    // Cerrar el modal al hacer clic en la X
+    document.getElementById('modalClose').addEventListener('click', function(){
+      document.getElementById('pdfModal').style.display = 'none';
+    });
+    // Cerrar el modal si se hace clic fuera de la ventana modal
+    window.addEventListener('click', function(event) {
+      if (event.target == document.getElementById('pdfModal')) {
+        document.getElementById('pdfModal').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
